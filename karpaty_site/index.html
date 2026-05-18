@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Карпати: музика вітру</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ======================================================
+   BASE
+====================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:linear-gradient(135deg,#000000,#0a2e1e,#000000,#0d3d2a,#000000,#145c38,#000000);
+    background-size:400% 400%;
+    animation:emeraldShift 10s ease infinite;
+    color:#f5ead7;
+    font-family:'Cormorant Garamond',serif;
+    touch-action:pan-y;
+}
+
+@keyframes emeraldShift{
+    0%   { background-position:0% 0%;   }
+    25%  { background-position:100% 50%; }
+    50%  { background-position:50% 100%; }
+    75%  { background-position:0% 50%;  }
+    100% { background-position:0% 0%;   }
+}
+
+
+
+/* ======================================================
+   SLIDER
+====================================================== */
+
+.slider{
+    display:flex;
+    width:100%;
+    height:100vh;
+    transition:transform .55s ease;
+    will-change:transform;
+}
+
+/* ======================================================
+   PAGE
+====================================================== */
+
+.page{
+    min-width:100vw;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    padding: clamp(16px,3vw,40px);
+    background: linear-gradient(
+        rgba(5,8,5,.78),
+        rgba(5,8,5,.78)
+    );
+}
+
+/* ======================================================
+   INTRO
+====================================================== */
+
+.intro{
+    text-align:center;
+}
+
+.intro h1{
+    font-size: clamp(50px,8vw,120px);
+    margin-bottom:25px;
+    line-height:1;
+}
+
+.intro p{
+    max-width:1000px;
+    line-height:1.6;
+    font-size: clamp(18px,2vw,34px);
+    padding:0 12px;
+}
+
+.authors{
+    margin-top:35px;
+    line-height:1.5;
+    color:#d9c6a5;
+    font-size: clamp(22px,2vw,36px);
+}
+
+/* ======================================================
+   LOCATION
+====================================================== */
+
+.location{
+    position:absolute;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    text-align:center;
+    color:#d9c5a3;
+    letter-spacing:1px;
+    font-size: clamp(18px,1.8vw,30px);
+}
+
+/* ======================================================
+   IMAGE
+====================================================== */
+
+.image-container{
+    width:100%;
+    height:68vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:25px;
+    padding: clamp(5px,2vw,20px);
+}
+
+.image-container img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    border-radius: clamp(10px,1vw,20px);
+    box-shadow: 0 0 35px rgba(0,0,0,.45);
+    user-select:none;
+    -webkit-user-drag:none;
+    pointer-events:none;
+}
+
+/* ======================================================
+   AUTHOR
+====================================================== */
+
+.author{
+    margin-top:15px;
+    text-align:center;
+    font-size: clamp(22px,2vw,38px);
+}
+
+/* ======================================================
+   QUOTE
+====================================================== */
+
+.quote{
+    margin-top:10px;
+    max-width:900px;
+    text-align:center;
+    line-height:1.5;
+    font-style:italic;
+    color:#d8c4a2;
+    padding:0 15px;
+    font-size: clamp(18px,1.7vw,28px);
+}
+
+/* ======================================================
+   CONTROLS
+====================================================== */
+
+.controls{
+    position:fixed;
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:12px;
+    z-index:1000;
+}
+
+.controls button{
+    width: clamp(48px,5vw,68px);
+    height: clamp(48px,5vw,68px);
+    border:none;
+    border-radius:50%;
+    background:#dcc9ab;
+    color:#162216;
+    cursor:pointer;
+    transition:.25s;
+    font-size: clamp(18px,2vw,30px);
+}
+
+.controls button:hover{
+    transform:scale(1.08);
+}
+
+/* ======================================================
+   SLIDE COUNTER
+====================================================== */
+
+.counter{
+    position:fixed;
+    bottom:22px;
+    right:18px;
+    font-size: clamp(13px,1.1vw,19px);
+    color:#d9c5a3;
+    opacity:.7;
+    z-index:1000;
+    font-style:italic;
+}
+
+/* ======================================================
+   HINT
+====================================================== */
+
+.hint{
+    position:fixed;
+    top:14px;
+    right:14px;
+    opacity:.7;
+    z-index:1000;
+    text-align:right;
+    font-size: clamp(12px,1vw,18px);
+}
+
+/* ======================================================
+   YOUTUBE BUTTON
+====================================================== */
+
+.yt-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    margin-top:32px;
+    padding:16px 38px;
+    border-radius:999px;
+    text-decoration:none;
+    background:#dcc9ab;
+    color:#162216;
+    font-family:'Cormorant Garamond',serif;
+    font-size: clamp(20px,2.2vw,30px);
+    font-weight:600;
+    letter-spacing:.5px;
+    transition:transform .25s, box-shadow .25s;
+    box-shadow: 0 4px 24px rgba(220,201,171,.18);
+}
+
+.yt-btn:hover{
+    transform:scale(1.06);
+    box-shadow: 0 8px 32px rgba(220,201,171,.35);
+}
+
+.yt-btn svg{
+    width: clamp(24px,2.5vw,36px);
+    height: clamp(24px,2.5vw,36px);
+    flex-shrink:0;
+}
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media(max-width:768px){
+    .page{
+        justify-content:flex-start;
+        padding-top:70px;
+    }
+    .image-container{
+        height:58vh;
+    }
+}
+
+/* ======================================================
+   SMALL PHONES
+====================================================== */
+
+@media(max-width:480px){
+    .image-container{
+        height:52vh;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================
+   HINT
+====================================================== -->
+
+<div class="hint">← → SPACE • Swipe</div>
+
+<!-- ======================================================
+   BUTTONS
+====================================================== -->
+
+<div class="controls">
+    <button id="prevBtn">←</button>
+    <button id="nextBtn">→</button>
+</div>
+
+<!-- ======================================================
+   COUNTER
+====================================================== -->
+
+<div class="counter" id="counter"></div>
+
+<!-- ======================================================
+   SLIDER
+====================================================== -->
+
+<div class="slider" id="slider">
+
+    <!-- ======================================================
+       INTRO
+    ====================================================== -->
+
+    <section class="page intro">
+
+        <h1>Карпати: музика вітру</h1>
+
+        <p>
+            Гори говорять мовою тиші.
+            Вода пам'ятає шлях крізь каміння.
+            А вітер між смереками переносить історії,
+            які неможливо записати словами.
+        </p>
+
+        <div class="authors">
+            Проєкт 10-Г класу<br><br>
+            Ілля Трикуліч<br>
+            Анастасія Паламарчук<br>
+        </div>
+
+    </section>
+
+    <!-- photo pages are injected here by JS -->
+
+</div>
+
+
+<script>
+
+/* ======================================================
+   AUTHORS
+====================================================== */
+
+const authors = {
+    "RD":"Рибчинський Денис",
+    "DL":"Дідик Валерія",
+    "TI":"Трикуліч Ілля",
+    "VL":"Ліза Войтенко",
+    "om":"Оксана Миколаївна Вусатюк",
+    "EG":"Іванов Єгор"
+};
+
+/* ======================================================
+   FILES
+====================================================== */
+
+const files = [
+
+    "divochi_slyozu/DL_001.jpg",
+
+    "divochi_slyozu/EG_001.jpg",
+    "divochi_slyozu/EG_002.jpg",
+    "divochi_slyozu/EG_004.jpg",
+
+    "divochi_slyozu/RD_001.jpg",
+    "divochi_slyozu/RD_002.jpg",
+    "divochi_slyozu/RD_003.jpg",
+    "divochi_slyozu/RD_004.jpg",
+
+    "divochi_slyozu/TI_001.jpg",
+    "divochi_slyozu/TI_002.jpg",
+    "divochi_slyozu/TI_003.jpg",
+    "divochi_slyozu/TI_004.jpg",
+    "divochi_slyozu/TI_005.jpg",
+
+    "divochi_slyozu/VL_001.jpg",
+
+    "other/om_001.jpg",
+
+    "skit/RD_001.jpg",
+
+    "vodospad/EG_003.jpg",
+    "vodospad/RD_001.jpg",
+    "vodospad/TI_001.jpg",
+    "vodospad/TI_002.jpg",
+    "vodospad/TI_003.jpg"
+
+];
+
+/* ======================================================
+   QUOTES
+====================================================== */
+
+const quotes = [
+    "Тиша гір звучить голосніше за слова.",
+    "Гори навчають мовчати красиво.",
+    "Кожна стежка веде до іншої версії себе.",
+    "У Карпатах навіть вітер має душу.",
+    "Туман приховує те, що не побачить метушня.",
+    "Вода пам'ятає шлях крізь каміння.",
+    "Смереки пам'ятають більше за людей.",
+    "Там, де закінчується шум — починаються Карпати.",
+
+    "Світло в горах завжди трохи інше — чесніше.",
+    "Тут час не йде, а стоїть між деревами.",
+    "Кожен водоспад — це втеча неба на землю.",
+    "Карпати говорять тишею, яку треба навчитися чути.",
+    "Дороги тут не ведуть — вони випробовують.",
+    "Каміння пам’ятає кроки тих, хто вже пішов.",
+    "Тут навіть повітря має текстуру спокою.",
+    "Гори не пояснюють себе — вони просто існують.",
+    "Туман стирає зайве, залишаючи справжнє.",
+    "У воді відображається не світ, а стан душі.",
+    "Тут небо ближче, ніж здається.",
+    "Кожен звук тут має вагу тиші.",
+    "Ліс не дивиться — він відчуває.",
+    "Тут немає поспіху, лише ритм природи.",
+    "Карпати не запам’ятовують людей — вони їх змінюють."
+];
+
+/* ======================================================
+   LOCATION
+====================================================== */
+
+function getLocation(path){
+    if(path.includes("divochi_slyozu")) return "Водоспад Дівочі сльози";
+    if(path.includes("skit"))           return "Манявський скит";
+    if(path.includes("vodospad"))       return "Манявський водоспад";
+    if(path.includes("other"))          return "Поза межами";
+    return "Карпати";
+}
+
+/* ======================================================
+   AUTHOR
+====================================================== */
+
+function getAuthor(path){
+    const file   = path.split("/").pop();
+    const prefix = file.split("_")[0];
+    return authors[prefix] || "Невідомий автор";
+}
+
+/* ======================================================
+   CREATE PHOTO PAGES
+====================================================== */
+
+const slider = document.getElementById("slider");
+
+files.forEach((file, index) => {
+
+    const page = document.createElement("section");
+    page.className = "page";
+
+    page.innerHTML = `
+        <div class="location">${getLocation(file)}</div>
+        <div class="image-container">
+            <img src="${file}" alt="Карпати">
+        </div>
+        <div class="author">${getAuthor(file)}</div>
+        <div class="quote">
+    "${quotes[index % quotes.length]}"
+</div>
+    `;
+
+    slider.appendChild(page);
+});
+
+/* ======================================================
+   FINAL PAGE  — додається всередину slider останньою
+====================================================== */
+
+const finalPage = document.createElement("section");
+finalPage.className = "page intro";
+
+finalPage.innerHTML = `
+    <h1>Дякуємо за увагу</h1>
+
+    <p>
+        Карпати залишаються там,
+        де шумить вода,
+        де туман торкається смерек,
+        і де вітер пам'ятає більше за людей.
+    </p>
+
+    <div class="authors">
+        10-Г клас<br><br>
+        «Карпати: музика вітру»
+    </div>
+
+    <a
+        class="yt-btn"
+        href="https://youtu.be/QPjlPqJWfMk?si=jKs1moxaUbev6RAG"
+        target="_blank"
+        rel="noopener"
+    >
+        <!-- YouTube icon -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#162216"/>
+            <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#dcc9ab"/>
+        </svg>
+        Дивитись кліп
+    </a>
+`;
+
+slider.appendChild(finalPage);
+
+/* ======================================================
+   SLIDER LOGIC
+====================================================== */
+
+let current = 0;
+
+function allPages(){
+    return document.querySelectorAll(".slider .page");
+}
+
+function updateSlider(){
+    slider.style.transform = `translateX(-${current * window.innerWidth}px)`;
+    updateCounter();
+}
+
+function updateCounter(){
+    const pages = allPages();
+    document.getElementById("counter").textContent = `${current + 1} / ${pages.length}`;
+}
+
+function nextSlide(){
+    const pages = allPages();
+    if(current < pages.length - 1){
+        current++;
+        updateSlider();
+    }
+}
+
+function prevSlide(){
+    if(current > 0){
+        current--;
+        updateSlider();
+    }
+}
+
+/* ======================================================
+   BUTTONS
+====================================================== */
+
+document.getElementById("nextBtn").addEventListener("click", nextSlide);
+document.getElementById("prevBtn").addEventListener("click", prevSlide);
+
+/* ======================================================
+   KEYBOARD
+====================================================== */
+
+document.addEventListener("keydown", (e) => {
+    if(e.key === "ArrowRight" || e.key === " ") nextSlide();
+    if(e.key === "ArrowLeft")                   prevSlide();
+});
+
+/* ======================================================
+   RESIZE FIX
+====================================================== */
+
+window.addEventListener("resize", updateSlider);
+
+/* ======================================================
+   SWIPE
+====================================================== */
+
+let startX = 0;
+let currentX = 0;
+let isDragging = false;
+
+slider.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+}, { passive:true });
+
+slider.addEventListener("touchmove", (e) => {
+    if(!isDragging) return;
+    currentX = e.touches[0].clientX;
+}, { passive:true });
+
+slider.addEventListener("touchend", () => {
+    if(!isDragging) return;
+    const diff = startX - currentX;
+    if(diff >  60) nextSlide();
+    else if(diff < -60) prevSlide();
+    isDragging = false;
+    startX = 0;
+    currentX = 0;
+});
+
+/* ======================================================
+   INIT
+====================================================== */
+
+updateCounter();
+
+</script>
+
+</body>
+</html>

@@ -62,7 +62,20 @@ html, body {
 .quote {
     margin-top:10px; max-width:900px; text-align:center;
     line-height:1.5; font-style:italic; color:#d8c4a2;
-    padding:0 15px; font-size:clamp(18px,1.7vw,28px);
+    padding:0 15px 60px 15px; /* bottom padding so controls don't overlap */
+    font-size:clamp(18px,1.7vw,28px);
+}
+
+/* landscape phones */
+@media (max-height: 500px) and (orientation: landscape) {
+    .image-container {
+        height: 72vh;
+        margin-top: 8px;
+    }
+    .location { font-size: clamp(12px, 1.5vw, 18px); top: 6px; }
+    .author   { font-size: clamp(14px, 1.5vw, 20px); margin-top: 4px; }
+    .quote    { font-size: clamp(12px, 1.3vw, 16px); margin-top: 4px; padding-bottom: 50px; }
+    .page     { justify-content: flex-start; padding-top: 32px; }
 }
 
 .controls {
@@ -70,11 +83,12 @@ html, body {
     display:flex; gap:12px; z-index:1000;
 }
 .controls button {
-    width:clamp(48px,5vw,68px); height:clamp(48px,5vw,68px);
+    width:clamp(44px,4.5vw,62px); height:clamp(44px,4.5vw,62px);
     border:none; border-radius:50%; background:#dcc9ab; color:#162216;
-    cursor:pointer; transition:.25s; font-size:clamp(18px,2vw,30px);
+    cursor:pointer; transition:.25s; font-size:clamp(16px,1.8vw,26px);
+    opacity: 0.88;
 }
-.controls button:hover { transform:scale(1.08); }
+.controls button:hover { transform:scale(1.08); opacity:1; }
 
 .counter {
     position:fixed; bottom:22px; right:18px;
@@ -97,10 +111,129 @@ html, body {
 .yt-btn svg { width:clamp(24px,2.5vw,36px); height:clamp(24px,2.5vw,36px); flex-shrink:0; }
 
 @media(max-width:768px){
-    .page { justify-content:flex-start; padding-top:70px; }
+    .page { justify-content:flex-start; padding-top:65px; }
     .image-container { height:58vh; }
 }
 @media(max-width:480px){ .image-container { height:52vh; } }
+
+/* =====================================================
+   EASTER EGG
+===================================================== */
+#easter {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    color: #f5ead7;
+}
+#easter.show { display: flex; }
+
+#easter canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#easter .egg-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: eggIn .8s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+
+@keyframes eggIn {
+    from { opacity:0; transform: scale(.6) translateY(40px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+}
+
+#easter .egg-caption {
+    font-size: clamp(18px, 2.5vw, 30px);
+    color: #b8d4c0;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeUp .6s .4s ease forwards;
+}
+
+@keyframes fadeUp {
+    from { opacity:0; transform:translateY(14px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+
+#easter .egg-photo {
+    width: clamp(140px, 28vw, 240px);
+    height: clamp(140px, 28vw, 240px);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4aff9a;
+    box-shadow: 0 0 30px #4aff9a88, 0 0 60px #4aff9a33;
+    animation: glowPulse 2.5s ease-in-out infinite;
+    opacity: 0;
+    animation: fadeUp .6s .6s ease forwards, glowPulse 2.5s 1.2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%,100% { box-shadow: 0 0 30px #4aff9a88, 0 0 60px #4aff9a33; }
+    50%     { box-shadow: 0 0 50px #4affb8cc, 0 0 100px #4aff9a55; }
+}
+
+#easter .egg-name {
+    margin-top: 18px;
+    font-size: clamp(26px, 4vw, 52px);
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #fff;
+    opacity: 0;
+    animation: fadeUp .6s .8s ease forwards;
+}
+
+#easter .egg-inst {
+    margin-top: 8px;
+    font-size: clamp(18px, 2vw, 28px);
+    color: #4aff9a;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeUp .6s 1s ease forwards;
+}
+
+#easter .egg-sub {
+    margin-top: 14px;
+    font-size: clamp(14px, 1.6vw, 22px);
+    color: #a0c8b0;
+    font-style: italic;
+    max-width: 480px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeUp .6s 1.2s ease forwards;
+}
+
+#easter .egg-back {
+    margin-top: 32px;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: 2px solid #4aff9a;
+    background: transparent;
+    color: #4aff9a;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 1.8vw, 24px);
+    cursor: pointer;
+    transition: .25s;
+    opacity: 0;
+    animation: fadeUp .6s 1.4s ease forwards;
+}
+#easter .egg-back:hover {
+    background: #4aff9a;
+    color: #000;
+}
 
 </style>
 </head>
@@ -113,8 +246,21 @@ html, body {
 </div>
 <div class="counter" id="counter"></div>
 
-<div class="slider" id="slider">
+<!-- EASTER EGG OVERLAY -->
+<div id="easter">
+    <canvas id="eggCanvas"></canvas>
+    <div class="egg-content">
+        <div class="egg-caption">зачекай… ти це знайшов?</div>
+        <img class="egg-photo" src="other/AT.jpg" alt="Ілля">
+        <div class="egg-name">Ілля Трикуліч</div>
+        <div class="egg-inst"> inst @illlya333
+        tg:rnicrosoft_corp</div>
+        <div class="egg-sub">ну ти й жук, знайшов пасхалку 🎉<br>мало хто дістається сюди)))</div>
+        <button class="egg-back" id="eggBack">← назад</button>
+    </div>
+</div>
 
+<div class="slider" id="slider">
     <section class="page intro">
         <h1>Карпати: музика вітру</h1>
         <p>
@@ -125,11 +271,10 @@ html, body {
         </p>
         <div class="authors">
             Проєкт 10-Г класу<br><br>
-            Ілля Трикуліч<br>
+            <span id="illyaName" style="cursor:default; user-select:none;">Ілля Трикуліч</span><br>
             Анастасія Паламарчук
         </div>
     </section>
-
 </div>
 
 <script>
@@ -146,29 +291,22 @@ const authors = {
 
 const files = [
     "divochi_slyozu/DL_001.jpg",
-
     "divochi_slyozu/EG_001.jpg",
     "divochi_slyozu/EG_002.jpg",
     "divochi_slyozu/EG_004.jpg",
-
     "divochi_slyozu/RD_001.jpg",
     "divochi_slyozu/RD_002.jpg",
     "divochi_slyozu/RD_003.jpg",
     "divochi_slyozu/RD_004.jpg",
-
     "divochi_slyozu/TI_001.jpg",
     "divochi_slyozu/TI_002.jpg",
     "divochi_slyozu/TI_003.jpg",
     "divochi_slyozu/TI_004.jpg",
     "divochi_slyozu/TI_005.jpg",
-
     "divochi_slyozu/VL_001.jpg",
-
     "other/om_001.jpg",
     "other/TK_001.jpg",
-
     "skit/RD_001.jpg",
-
     "vodospad/EG_003.jpg",
     "vodospad/RD_001.jpg",
     "vodospad/TI_001.jpg",
@@ -185,7 +323,7 @@ const quotes = [
     "Вода пам'ятає шлях крізь каміння.",
     "Смереки пам'ятають більше, ніж люди.",
     "Там завмирає шум, де починаються гори.",
-    "Світло в горах завжди трохи інше — чесніше.",
+    "Світло в горах завжди трохи інше - чесніше.",
     "Час тут не йде - він чаїться поміж смереками.",
     "Кожен водоспад - це втеча неба на землю.",
     "Тиша Карпат учить не лише слухати, але й чути.",
@@ -212,7 +350,7 @@ function getLocation(path){
 }
 
 function getAuthor(path){
-    const file   = path.split("/").pop();
+    const file   = path.split("/").pop().replace(/\.[^.]+$/, "");
     const prefix = file.split("_")[0];
     return authors[prefix] || "Невідомий автор";
 }
@@ -226,7 +364,7 @@ files.forEach((file, index) => {
         <div class="location">${getLocation(file)}</div>
         <div class="image-container"><img src="${file}" alt="Карпати"></div>
         <div class="author">${getAuthor(file)}</div>
-        <div class="quote">"${quotes[index % quotes.length]}"</div>
+        <div class="quote">${quotes[index % quotes.length]}</div>
     `;
     slider.appendChild(page);
 });
@@ -235,16 +373,8 @@ const finalPage = document.createElement("section");
 finalPage.className = "page intro";
 finalPage.innerHTML = `
     <h1>Дякуємо за увагу</h1>
-    <p>
-        Карпати залишаються там,
-        де шумить вода,
-        де туман торкається смерек,
-        і де вітер пам'ятає більше за людей.
-    </p>
-    <div class="authors">
-        10-Г клас<br><br>
-        «Карпати: музика вітру»
-    </div>
+    <p>Карпати залишаються там, де шумить вода, де туман торкається смерек, і де вітер пам'ятає більше за людей.</p>
+    <div class="authors">10-Г клас<br><br>«Карпати: музика вітру»</div>
     <a class="yt-btn" href="https://youtu.be/QPjlPqJWfMk?si=jKs1moxaUbev6RAG" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#162216"/>
@@ -255,7 +385,9 @@ finalPage.innerHTML = `
 `;
 slider.appendChild(finalPage);
 
-/* === BACKGROUND STATES === */
+/* =====================================================
+   BACKGROUND
+===================================================== */
 const bgStates = [
     {pos:"0% 0%",    br:1.00}, {pos:"80% 20%",  br:1.05},
     {pos:"30% 90%",  br:0.96}, {pos:"100% 50%", br:1.07},
@@ -277,7 +409,6 @@ function applyBg(){
     document.body.style.backgroundPosition = s.pos;
     document.body.style.filter = "brightness(" + s.br + ")";
 }
-
 function shiftBg(dir){
     const r = Math.random();
     const step = r < .6 ? 1 : r < .9 ? 2 : 3;
@@ -285,16 +416,16 @@ function shiftBg(dir){
     applyBg();
 }
 
-/* === SLIDER === */
+/* =====================================================
+   SLIDER
+===================================================== */
 let current = 0;
-
 function pageCount(){ return document.querySelectorAll(".slider .page").length; }
 
 function updateSlider(){
     slider.style.transform = "translateX(-" + (current * window.innerWidth) + "px)";
     document.getElementById("counter").textContent = (current+1) + " / " + pageCount();
 }
-
 function goNext(){
     if(current < pageCount()-1){ current++; updateSlider(); shiftBg(1); }
 }
@@ -315,6 +446,110 @@ slider.addEventListener("touchstart", e=>{ tx=e.touches[0].clientX; }, {passive:
 slider.addEventListener("touchmove",  e=>{ cx=e.touches[0].clientX; }, {passive:true});
 slider.addEventListener("touchend",   ()=>{ if(tx-cx>60)goNext(); else if(cx-tx>60)goPrev(); tx=cx=0; });
 
+/* =====================================================
+   EASTER EGG
+===================================================== */
+let illyaTaps = 0;
+let illyaTimer = null;
+
+document.getElementById("illyaName").addEventListener("click", () => {
+    illyaTaps++;
+    clearTimeout(illyaTimer);
+    illyaTimer = setTimeout(() => { illyaTaps = 0; }, 1200);
+    if(illyaTaps >= 3){
+        illyaTaps = 0;
+        openEaster();
+    }
+});
+
+function openEaster(){
+    const el = document.getElementById("easter");
+    el.classList.add("show");
+    startComets();
+}
+
+document.getElementById("eggBack").addEventListener("click", () => {
+    document.getElementById("easter").classList.remove("show");
+    stopComets();
+});
+
+/* --- comet canvas --- */
+let cometRAF = null;
+let comets = [];
+
+function startComets(){
+    const canvas = document.getElementById("eggCanvas");
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext("2d");
+    comets = [];
+
+    function spawnComet(){
+        const angle = (Math.random() * 30 + 15) * Math.PI / 180;
+        comets.push({
+            x: Math.random() * canvas.width * 1.4 - canvas.width * 0.2,
+            y: -20,
+            vx: Math.cos(angle) * (6 + Math.random() * 6),
+            vy: Math.sin(angle) * (6 + Math.random() * 6),
+            len: 80 + Math.random() * 120,
+            alpha: 0.7 + Math.random() * 0.3,
+            size: 1.5 + Math.random() * 2,
+            hue: Math.random() > 0.5 ? 145 : 200,
+        });
+    }
+
+    let frame = 0;
+    function loop(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        frame++;
+        if(frame % 12 === 0) spawnComet();
+
+        comets = comets.filter(c => c.y < canvas.height + 50 && c.x < canvas.width + 50);
+
+        comets.forEach(c => {
+            const grad = ctx.createLinearGradient(c.x, c.y, c.x - c.vx/7 * c.len, c.y - c.vy/7 * c.len);
+            grad.addColorStop(0, `hsla(${c.hue},100%,75%,${c.alpha})`);
+            grad.addColorStop(1, `hsla(${c.hue},100%,75%,0)`);
+            ctx.beginPath();
+            ctx.moveTo(c.x, c.y);
+            ctx.lineTo(c.x - c.vx/7 * c.len, c.y - c.vy/7 * c.len);
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = c.size;
+            ctx.lineCap = "round";
+            ctx.stroke();
+
+            // head glow
+            ctx.beginPath();
+            ctx.arc(c.x, c.y, c.size * 1.5, 0, Math.PI*2);
+            ctx.fillStyle = `hsla(${c.hue},100%,90%,${c.alpha})`;
+            ctx.fill();
+
+            c.x += c.vx;
+            c.y += c.vy;
+        });
+
+        cometRAF = requestAnimationFrame(loop);
+    }
+    loop();
+}
+
+function stopComets(){
+    cancelAnimationFrame(cometRAF);
+    comets = [];
+    const canvas = document.getElementById("eggCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+window.addEventListener("resize", () => {
+    const canvas = document.getElementById("eggCanvas");
+    if(canvas){
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+});
+
+/* INIT */
 applyBg();
 updateSlider();
 

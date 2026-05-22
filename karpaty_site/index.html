@@ -39,6 +39,28 @@ html, body {
 .intro p { max-width:1000px; line-height:1.6; font-size:clamp(18px,2vw,34px); padding:0 12px; }
 .authors { margin-top:35px; line-height:1.5; color:#d9c6a5; font-size:clamp(22px,2vw,36px); }
 
+.inst-links {
+    margin-top: 18px;
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.inst-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #a8d8b8;
+    text-decoration: none;
+    font-size: clamp(15px, 1.5vw, 22px);
+    font-style: italic;
+    letter-spacing: .5px;
+    transition: color .2s, transform .2s;
+    opacity: .85;
+}
+.inst-links a:hover { color: #4aff9a; transform: scale(1.06); opacity:1; }
+.inst-links svg { width:18px; height:18px; flex-shrink:0; }
+
 .location {
     position:absolute; top:18px; left:50%; transform:translateX(-50%);
     width:90%; text-align:center; color:#d9c5a3;
@@ -62,16 +84,12 @@ html, body {
 .quote {
     margin-top:10px; max-width:900px; text-align:center;
     line-height:1.5; font-style:italic; color:#d8c4a2;
-    padding:0 15px 60px 15px; /* bottom padding so controls don't overlap */
+    padding:0 15px 60px 15px;
     font-size:clamp(18px,1.7vw,28px);
 }
 
-/* landscape phones */
 @media (max-height: 500px) and (orientation: landscape) {
-    .image-container {
-        height: 72vh;
-        margin-top: 8px;
-    }
+    .image-container { height: 72vh; margin-top: 8px; }
     .location { font-size: clamp(12px, 1.5vw, 18px); top: 6px; }
     .author   { font-size: clamp(14px, 1.5vw, 20px); margin-top: 4px; }
     .quote    { font-size: clamp(12px, 1.3vw, 16px); margin-top: 4px; padding-bottom: 50px; }
@@ -131,11 +149,14 @@ html, body {
     text-align: center;
     font-family: 'Cormorant Garamond', serif;
     color: #f5ead7;
+    /* allow scroll on small phones */
+    overflow-y: auto;
+    padding: 20px;
 }
 #easter.show { display: flex; }
 
 #easter canvas {
-    position: absolute;
+    position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
@@ -147,6 +168,7 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px 0 40px;
     animation: eggIn .8s cubic-bezier(.2, 1.4, .4, 1) both;
 }
 
@@ -156,7 +178,7 @@ html, body {
 }
 
 #easter .egg-caption {
-    font-size: clamp(18px, 2.5vw, 30px);
+    font-size: clamp(16px, 2.5vw, 30px);
     color: #b8d4c0;
     margin-bottom: 18px;
     letter-spacing: 1px;
@@ -170,13 +192,11 @@ html, body {
 }
 
 #easter .egg-photo {
-    width: clamp(140px, 28vw, 240px);
-    height: clamp(140px, 28vw, 240px);
+    width: clamp(110px, 24vw, 220px);
+    height: clamp(110px, 24vw, 220px);
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #4aff9a;
-    box-shadow: 0 0 30px #4aff9a88, 0 0 60px #4aff9a33;
-    animation: glowPulse 2.5s ease-in-out infinite;
     opacity: 0;
     animation: fadeUp .6s .6s ease forwards, glowPulse 2.5s 1.2s ease-in-out infinite;
 }
@@ -187,8 +207,8 @@ html, body {
 }
 
 #easter .egg-name {
-    margin-top: 18px;
-    font-size: clamp(26px, 4vw, 52px);
+    margin-top: 16px;
+    font-size: clamp(24px, 4vw, 52px);
     font-weight: 600;
     letter-spacing: 2px;
     color: #fff;
@@ -196,28 +216,42 @@ html, body {
     animation: fadeUp .6s .8s ease forwards;
 }
 
-#easter .egg-inst {
-    margin-top: 8px;
-    font-size: clamp(18px, 2vw, 28px);
-    color: #4aff9a;
-    letter-spacing: 1px;
+#easter .egg-socials {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
     opacity: 0;
     animation: fadeUp .6s 1s ease forwards;
 }
 
+#easter .egg-socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #4aff9a;
+    text-decoration: none;
+    font-size: clamp(15px, 2vw, 26px);
+    letter-spacing: .5px;
+    transition: color .2s, transform .2s;
+}
+#easter .egg-socials a:hover { color: #fff; transform: scale(1.06); }
+#easter .egg-socials svg { width: 20px; height: 20px; flex-shrink: 0; }
+
 #easter .egg-sub {
     margin-top: 14px;
-    font-size: clamp(14px, 1.6vw, 22px);
+    font-size: clamp(13px, 1.6vw, 22px);
     color: #a0c8b0;
     font-style: italic;
-    max-width: 480px;
+    max-width: 420px;
     line-height: 1.5;
     opacity: 0;
     animation: fadeUp .6s 1.2s ease forwards;
 }
 
 #easter .egg-back {
-    margin-top: 32px;
+    margin-top: 28px;
     padding: 12px 32px;
     border-radius: 999px;
     border: 2px solid #4aff9a;
@@ -229,8 +263,10 @@ html, body {
     transition: .25s;
     opacity: 0;
     animation: fadeUp .6s 1.4s ease forwards;
+    -webkit-tap-highlight-color: transparent;
 }
-#easter .egg-back:hover {
+#easter .egg-back:hover,
+#easter .egg-back:active {
     background: #4aff9a;
     color: #000;
 }
@@ -250,11 +286,25 @@ html, body {
 <div id="easter">
     <canvas id="eggCanvas"></canvas>
     <div class="egg-content">
-        <div class="egg-caption">зачекай… ти це знайшов?</div>
+        <div class="egg-caption">зачекай… ти це знайшов? 👀</div>
         <img class="egg-photo" src="other/AT.jpg" alt="Ілля">
         <div class="egg-name">Ілля Трикуліч</div>
-        <div class="egg-inst"> inst @illlya333
-        tg:rnicrosoft_corp</div>
+        <div class="egg-socials">
+            <a href="https://instagram.com/illlya333" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#4aff9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1" fill="#4aff9a" stroke="none"/>
+                </svg>
+                @illlya333
+            </a>
+            <a href="https://t.me/rnicrosoft_corp" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#4aff9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 5L2 12.5l7 1M21 5l-5 14-7-5.5M21 5L9 13.5m0 0V19l3.5-3"/>
+                </svg>
+                rnicrosoft_corp
+            </a>
+        </div>
         <div class="egg-sub">ну ти й жук, знайшов пасхалку 🎉<br>мало хто дістається сюди)))</div>
         <button class="egg-back" id="eggBack">← назад</button>
     </div>
@@ -271,8 +321,26 @@ html, body {
         </p>
         <div class="authors">
             Проєкт 10-Г класу<br><br>
-            <span id="illyaName" style="cursor:default; user-select:none;">Ілля Трикуліч</span><br>
+            <span id="illyaName" style="cursor:default; user-select:none; -webkit-tap-highlight-color:transparent;">Ілля Трикуліч</span><br>
             Анастасія Паламарчук
+        </div>
+        <div class="inst-links">
+            <a href="https://instagram.com/illlya333" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+                @illlya333
+            </a>
+            <a href="https://instagram.com/pal.alya_" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+                @pal.alya_
+            </a>
         </div>
     </section>
 </div>
@@ -441,41 +509,83 @@ document.addEventListener("keydown", e => {
 });
 window.addEventListener("resize", updateSlider);
 
-let tx=0, cx=0;
-slider.addEventListener("touchstart", e=>{ tx=e.touches[0].clientX; }, {passive:true});
-slider.addEventListener("touchmove",  e=>{ cx=e.touches[0].clientX; }, {passive:true});
-slider.addEventListener("touchend",   ()=>{ if(tx-cx>60)goNext(); else if(cx-tx>60)goPrev(); tx=cx=0; });
+/* swipe — skip on page 0 to avoid fighting with tap targets on intro */
+let tx=0, cx=0, swipeLocked=false;
+slider.addEventListener("touchstart", e=>{
+    tx=e.touches[0].clientX;
+    cx=tx;
+    swipeLocked=false;
+}, {passive:true});
+slider.addEventListener("touchmove", e=>{
+    cx=e.touches[0].clientX;
+    /* if horizontal drag detected, mark locked so tap won't fire */
+    if(Math.abs(cx-tx) > 10) swipeLocked=true;
+}, {passive:true});
+slider.addEventListener("touchend", ()=>{
+    const diff = tx - cx;
+    /* page 0: only allow swipe left (forward), never swipe back from start */
+    if(current === 0){
+        if(diff > 60) goNext();
+    } else {
+        if(diff > 60) goNext();
+        else if(diff < -60) goPrev();
+    }
+    tx=cx=0;
+});
 
 /* =====================================================
    EASTER EGG
 ===================================================== */
-let illyaTaps = 0;
-let illyaTimer = null;
+let illyaTaps   = 0;
+let illyaTimer  = null;
+let lastTap     = 0;
 
-document.getElementById("illyaName").addEventListener("click", () => {
+const illyaEl = document.getElementById("illyaName");
+
+/* works on both mouse (desktop) and touch (phone) */
+function handleIllyaTap(e){
+    /* prevent the touch from also triggering a swipe */
+    e.stopPropagation();
+
+    const now = Date.now();
+    /* reset if gap > 1.2s */
+    if(now - lastTap > 1200) illyaTaps = 0;
+    lastTap = now;
+
     illyaTaps++;
     clearTimeout(illyaTimer);
-    illyaTimer = setTimeout(() => { illyaTaps = 0; }, 1200);
+    illyaTimer = setTimeout(()=>{ illyaTaps=0; }, 1200);
+
     if(illyaTaps >= 3){
         illyaTaps = 0;
         openEaster();
     }
-});
+}
+
+illyaEl.addEventListener("click",      handleIllyaTap);
+illyaEl.addEventListener("touchend",   handleIllyaTap, {passive:false});
 
 function openEaster(){
-    const el = document.getElementById("easter");
-    el.classList.add("show");
+    document.getElementById("easter").classList.add("show");
     startComets();
 }
 
-document.getElementById("eggBack").addEventListener("click", () => {
+document.getElementById("eggBack").addEventListener("click", closeEaster);
+document.getElementById("eggBack").addEventListener("touchend", e=>{
+    e.stopPropagation();
+    closeEaster();
+}, {passive:false});
+
+function closeEaster(){
     document.getElementById("easter").classList.remove("show");
     stopComets();
-});
+}
 
-/* --- comet canvas --- */
+/* =====================================================
+   COMETS
+===================================================== */
 let cometRAF = null;
-let comets = [];
+let comets   = [];
 
 function startComets(){
     const canvas = document.getElementById("eggCanvas");
@@ -487,14 +597,14 @@ function startComets(){
     function spawnComet(){
         const angle = (Math.random() * 30 + 15) * Math.PI / 180;
         comets.push({
-            x: Math.random() * canvas.width * 1.4 - canvas.width * 0.2,
-            y: -20,
-            vx: Math.cos(angle) * (6 + Math.random() * 6),
-            vy: Math.sin(angle) * (6 + Math.random() * 6),
-            len: 80 + Math.random() * 120,
-            alpha: 0.7 + Math.random() * 0.3,
-            size: 1.5 + Math.random() * 2,
-            hue: Math.random() > 0.5 ? 145 : 200,
+            x:     Math.random() * canvas.width * 1.4 - canvas.width * 0.2,
+            y:     -20,
+            vx:    Math.cos(angle) * (5 + Math.random() * 6),
+            vy:    Math.sin(angle) * (5 + Math.random() * 6),
+            len:   80 + Math.random() * 120,
+            alpha: 0.6 + Math.random() * 0.4,
+            size:  1.5 + Math.random() * 2,
+            hue:   Math.random() > 0.5 ? 145 : 195,
         });
     }
 
@@ -502,26 +612,28 @@ function startComets(){
     function loop(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         frame++;
-        if(frame % 12 === 0) spawnComet();
+        if(frame % 10 === 0) spawnComet();
 
-        comets = comets.filter(c => c.y < canvas.height + 50 && c.x < canvas.width + 50);
+        comets = comets.filter(c => c.y < canvas.height + 60 && c.x < canvas.width + 60);
 
         comets.forEach(c => {
-            const grad = ctx.createLinearGradient(c.x, c.y, c.x - c.vx/7 * c.len, c.y - c.vy/7 * c.len);
+            const tailX = c.x - (c.vx / 7) * c.len;
+            const tailY = c.y - (c.vy / 7) * c.len;
+            const grad  = ctx.createLinearGradient(c.x, c.y, tailX, tailY);
             grad.addColorStop(0, `hsla(${c.hue},100%,75%,${c.alpha})`);
             grad.addColorStop(1, `hsla(${c.hue},100%,75%,0)`);
+
             ctx.beginPath();
             ctx.moveTo(c.x, c.y);
-            ctx.lineTo(c.x - c.vx/7 * c.len, c.y - c.vy/7 * c.len);
+            ctx.lineTo(tailX, tailY);
             ctx.strokeStyle = grad;
-            ctx.lineWidth = c.size;
-            ctx.lineCap = "round";
+            ctx.lineWidth   = c.size;
+            ctx.lineCap     = "round";
             ctx.stroke();
 
-            // head glow
             ctx.beginPath();
-            ctx.arc(c.x, c.y, c.size * 1.5, 0, Math.PI*2);
-            ctx.fillStyle = `hsla(${c.hue},100%,90%,${c.alpha})`;
+            ctx.arc(c.x, c.y, c.size * 1.6, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${c.hue},100%,92%,${c.alpha})`;
             ctx.fill();
 
             c.x += c.vx;
@@ -537,16 +649,14 @@ function stopComets(){
     cancelAnimationFrame(cometRAF);
     comets = [];
     const canvas = document.getElementById("eggCanvas");
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 }
 
-window.addEventListener("resize", () => {
-    const canvas = document.getElementById("eggCanvas");
-    if(canvas){
-        canvas.width  = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
+window.addEventListener("resize", ()=>{
+    const c = document.getElementById("eggCanvas");
+    c.width  = window.innerWidth;
+    c.height = window.innerHeight;
+    updateSlider();
 });
 
 /* INIT */

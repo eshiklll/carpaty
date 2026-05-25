@@ -11,8 +11,9 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 
 html, body {
-    width:100%; height:100%; overflow:hidden;
-    background: linear-gradient(135deg, #1b4d35, #2a6b49, #163d2b, #226040, #1b4d35, #2e7350, #163d2b);
+    width:100%; height:100%;
+    overflow:hidden;
+    background: linear-gradient(135deg,#0a1a10,#1a5c3a,#0d2318,#1f6b42,#0a1a10,#237a4a,#0d2318);
     background-size: 400% 400%;
     background-position: 0% 0%;
     transition: background-position 1.6s cubic-bezier(.4,0,.2,1), filter 1.3s ease;
@@ -21,342 +22,187 @@ html, body {
     touch-action: pan-y;
 }
 
+/* SLIDER */
 .slider {
-    display:flex; width:100%; height:100vh;
-    transition:transform .55s ease; will-change:transform;
-}
-
-.page {
-    min-width:100vw; height:100vh;
-    display:flex; flex-direction:column;
-    justify-content:center; align-items:center;
-    position:relative; padding:clamp(16px,3vw,40px);
-    background:linear-gradient(rgba(5,14,8,.68), rgba(5,14,8,.68));
-}
-
-.intro { text-align:center; }
-.intro h1 { font-size:clamp(50px,8vw,120px); margin-bottom:25px; line-height:1; }
-.intro p { max-width:1000px; line-height:1.6; font-size:clamp(18px,2vw,34px); padding:0 12px; }
-.authors { margin-top:35px; line-height:1.5; color:#d9c6a5; font-size:clamp(22px,2vw,36px); }
-
-.inst-links {
-    margin-top: 18px;
     display: flex;
-    gap: 18px;
-    justify-content: center;
-    flex-wrap: wrap;
+    width: 100%; height: 100vh;
+    transition: transform .55s ease;
+    will-change: transform;
 }
-.inst-links a {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    color: #a8d8b8;
-    text-decoration: none;
-    font-size: clamp(15px, 1.5vw, 22px);
-    font-style: italic;
-    letter-spacing: .5px;
-    transition: color .2s, transform .2s;
-    opacity: .85;
-}
-.inst-links a:hover { color: #4aff9a; transform: scale(1.06); opacity:1; }
-.inst-links svg { width:18px; height:18px; flex-shrink:0; }
 
+/* PAGE */
+.page {
+    min-width: 100vw; height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    position: relative;
+    padding: clamp(16px,3vw,40px);
+    background: linear-gradient(rgba(5,8,5,.72), rgba(5,8,5,.72));
+}
+
+/* INTRO */
+.intro { text-align: center; }
+.intro h1 {
+    font-size: clamp(50px,8vw,120px);
+    margin-bottom: 25px; line-height: 1;
+}
+.intro p {
+    max-width: 1000px; line-height: 1.6;
+    font-size: clamp(18px,2vw,34px);
+    padding: 0 12px;
+}
+.authors {
+    margin-top: 35px; line-height: 1.5;
+    color: #d9c6a5;
+    font-size: clamp(22px,2vw,36px);
+}
+
+/* LOCATION */
 .location {
-    position:absolute; top:18px; left:50%; transform:translateX(-50%);
-    width:90%; text-align:center; color:#d9c5a3;
-    letter-spacing:1px; font-size:clamp(18px,1.8vw,30px);
+    position: absolute; top: 18px;
+    left: 50%; transform: translateX(-50%);
+    width: 90%; text-align: center;
+    color: #d9c5a3; letter-spacing: 1px;
+    font-size: clamp(18px,1.8vw,30px);
 }
 
+/* IMAGE */
 .image-container {
-    width:100%; height:68vh;
-    display:flex; justify-content:center; align-items:center;
-    margin-top:25px; padding:clamp(5px,2vw,20px);
+    width: 100%; height: 68vh;
+    display: flex; justify-content: center; align-items: center;
+    margin-top: 25px;
+    padding: clamp(5px,2vw,20px);
 }
 .image-container img {
-    max-width:100%; max-height:100%; object-fit:contain;
-    border-radius:clamp(10px,1vw,20px);
-    box-shadow:0 0 35px rgba(0,0,0,.45);
-    user-select:none; -webkit-user-drag:none; pointer-events:none;
-}
-
-.author { margin-top:15px; text-align:center; font-size:clamp(22px,2vw,38px); }
-
-.quote {
-    margin-top:10px; max-width:900px; text-align:center;
-    line-height:1.5; font-style:italic; color:#d8c4a2;
-    padding:0 15px 60px 15px;
-    font-size:clamp(18px,1.7vw,28px);
-}
-
-@media (max-height: 500px) and (orientation: landscape) {
-    .image-container { height: 72vh; margin-top: 8px; }
-    .location { font-size: clamp(12px, 1.5vw, 18px); top: 6px; }
-    .author   { font-size: clamp(14px, 1.5vw, 20px); margin-top: 4px; }
-    .quote    { font-size: clamp(12px, 1.3vw, 16px); margin-top: 4px; padding-bottom: 50px; }
-    .page     { justify-content: flex-start; padding-top: 32px; }
-}
-
-.controls {
-    position:fixed; bottom:15px; left:50%; transform:translateX(-50%);
-    display:flex; gap:12px; z-index:1000;
-}
-.controls button {
-    width:clamp(44px,4.5vw,62px); height:clamp(44px,4.5vw,62px);
-    border:none; border-radius:50%; background:#dcc9ab; color:#162216;
-    cursor:pointer; transition:.25s; font-size:clamp(16px,1.8vw,26px);
-    opacity: 0.88;
-}
-.controls button:hover { transform:scale(1.08); opacity:1; }
-
-.counter {
-    position:fixed; bottom:22px; right:18px;
-    font-size:clamp(13px,1.1vw,19px); color:#d9c5a3;
-    opacity:.7; z-index:1000; font-style:italic;
-}
-
-.hint { position:fixed; top:14px; right:14px; opacity:.7; z-index:1000; font-size:clamp(12px,1vw,18px); }
-
-.yt-btn {
-    display:inline-flex; align-items:center; gap:12px;
-    margin-top:32px; padding:16px 38px; border-radius:999px;
-    text-decoration:none; background:#dcc9ab; color:#162216;
-    font-family:'Cormorant Garamond',serif; font-size:clamp(20px,2.2vw,30px);
-    font-weight:600; letter-spacing:.5px;
-    transition:transform .25s, box-shadow .25s;
-    box-shadow:0 4px 24px rgba(220,201,171,.18);
-}
-.yt-btn:hover { transform:scale(1.06); box-shadow:0 8px 32px rgba(220,201,171,.35); }
-.yt-btn svg { width:clamp(24px,2.5vw,36px); height:clamp(24px,2.5vw,36px); flex-shrink:0; }
-
-@media(max-width:768px){
-    .page { justify-content:flex-start; padding-top:65px; }
-    .image-container { height:58vh; }
-}
-@media(max-width:480px){ .image-container { height:52vh; } }
-
-/* =====================================================
-   EASTER EGG
-===================================================== */
-#easter {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: #000;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-family: 'Cormorant Garamond', serif;
-    color: #f5ead7;
-    /* allow scroll on small phones */
-    overflow-y: auto;
-    padding: 20px;
-}
-#easter.show { display: flex; }
-
-#easter canvas {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
+    max-width: 100%; max-height: 100%;
+    object-fit: contain;
+    border-radius: clamp(10px,1vw,20px);
+    box-shadow: 0 0 35px rgba(0,0,0,.45);
+    user-select: none;
+    -webkit-user-drag: none;
     pointer-events: none;
 }
 
-#easter .egg-content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0 40px;
-    animation: eggIn .8s cubic-bezier(.2, 1.4, .4, 1) both;
+/* AUTHOR */
+.author {
+    margin-top: 15px; text-align: center;
+    font-size: clamp(22px,2vw,38px);
 }
 
-@keyframes eggIn {
-    from { opacity:0; transform: scale(.6) translateY(40px); }
-    to   { opacity:1; transform: scale(1) translateY(0); }
+/* QUOTE */
+.quote {
+    margin-top: 10px; max-width: 900px;
+    text-align: center; line-height: 1.5;
+    font-style: italic; color: #d8c4a2;
+    padding: 0 15px;
+    font-size: clamp(18px,1.7vw,28px);
 }
 
-#easter .egg-caption {
-    font-size: clamp(16px, 2.5vw, 30px);
-    color: #b8d4c0;
-    margin-bottom: 18px;
-    letter-spacing: 1px;
-    opacity: 0;
-    animation: fadeUp .6s .4s ease forwards;
+/* CONTROLS */
+.controls {
+    position: fixed; bottom: 15px;
+    left: 50%; transform: translateX(-50%);
+    display: flex; gap: 12px; z-index: 1000;
+}
+.controls button {
+    width: clamp(48px,5vw,68px);
+    height: clamp(48px,5vw,68px);
+    border: none; border-radius: 50%;
+    background: #dcc9ab; color: #162216;
+    cursor: pointer; transition: .25s;
+    font-size: clamp(18px,2vw,30px);
+}
+.controls button:hover { transform: scale(1.08); }
+
+/* COUNTER */
+.counter {
+    position: fixed; bottom: 22px; right: 18px;
+    font-size: clamp(13px,1.1vw,19px);
+    color: #d9c5a3; opacity: .7;
+    z-index: 1000; font-style: italic;
 }
 
-@keyframes fadeUp {
-    from { opacity:0; transform:translateY(14px); }
-    to   { opacity:1; transform:translateY(0); }
+/* HINT */
+.hint {
+    position: fixed; top: 14px; right: 14px;
+    opacity: .7; z-index: 1000;
+    text-align: right;
+    font-size: clamp(12px,1vw,18px);
 }
 
-#easter .egg-photo {
-    width: clamp(110px, 24vw, 220px);
-    height: clamp(110px, 24vw, 220px);
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #4aff9a;
-    opacity: 0;
-    animation: fadeUp .6s .6s ease forwards, glowPulse 2.5s 1.2s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-    0%,100% { box-shadow: 0 0 30px #4aff9a88, 0 0 60px #4aff9a33; }
-    50%     { box-shadow: 0 0 50px #4affb8cc, 0 0 100px #4aff9a55; }
-}
-
-#easter .egg-name {
-    margin-top: 16px;
-    font-size: clamp(24px, 4vw, 52px);
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: #fff;
-    opacity: 0;
-    animation: fadeUp .6s .8s ease forwards;
-}
-
-#easter .egg-socials {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: center;
-    opacity: 0;
-    animation: fadeUp .6s 1s ease forwards;
-}
-
-#easter .egg-socials a {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #4aff9a;
-    text-decoration: none;
-    font-size: clamp(15px, 2vw, 26px);
-    letter-spacing: .5px;
-    transition: color .2s, transform .2s;
-}
-#easter .egg-socials a:hover { color: #fff; transform: scale(1.06); }
-#easter .egg-socials svg { width: 20px; height: 20px; flex-shrink: 0; }
-
-#easter .egg-sub {
-    margin-top: 14px;
-    font-size: clamp(13px, 1.6vw, 22px);
-    color: #a0c8b0;
-    font-style: italic;
-    max-width: 420px;
-    line-height: 1.5;
-    opacity: 0;
-    animation: fadeUp .6s 1.2s ease forwards;
-}
-
-#easter .egg-back {
-    margin-top: 28px;
-    padding: 12px 32px;
-    border-radius: 999px;
-    border: 2px solid #4aff9a;
-    background: transparent;
-    color: #4aff9a;
+/* YOUTUBE BUTTON */
+.yt-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-top: 32px; padding: 16px 38px;
+    border-radius: 999px; text-decoration: none;
+    background: #dcc9ab; color: #162216;
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(16px, 1.8vw, 24px);
-    cursor: pointer;
-    transition: .25s;
-    opacity: 0;
-    animation: fadeUp .6s 1.4s ease forwards;
-    -webkit-tap-highlight-color: transparent;
+    font-size: clamp(20px,2.2vw,30px); font-weight: 600;
+    letter-spacing: .5px;
+    transition: transform .25s, box-shadow .25s;
+    box-shadow: 0 4px 24px rgba(220,201,171,.18);
 }
-#easter .egg-back:hover,
-#easter .egg-back:active {
-    background: #4aff9a;
-    color: #000;
+.yt-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 32px rgba(220,201,171,.35);
+}
+.yt-btn svg {
+    width: clamp(24px,2.5vw,36px);
+    height: clamp(24px,2.5vw,36px);
+    flex-shrink: 0;
+}
+
+@media(max-width:768px) {
+    .page { justify-content: flex-start; padding-top: 70px; }
+    .image-container { height: 58vh; }
+}
+@media(max-width:480px) {
+    .image-container { height: 52vh; }
 }
 
 </style>
 </head>
 <body>
 
-<div class="hint"></div>
+<div class="hint">← → SPACE • Swipe</div>
 <div class="controls">
     <button id="prevBtn">←</button>
     <button id="nextBtn">→</button>
 </div>
 <div class="counter" id="counter"></div>
 
-<!-- EASTER EGG OVERLAY -->
-<div id="easter">
-    <canvas id="eggCanvas"></canvas>
-    <div class="egg-content">
-        <div class="egg-caption">зачекай… ти це знайшов? 👀</div>
-        <img class="egg-photo" src="other/AT.jpg" alt="Ілля">
-        <div class="egg-name">Ілля Трикуліч</div>
-        <div class="egg-socials">
-            <a href="https://instagram.com/illlya333" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#4aff9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="#4aff9a" stroke="none"/>
-                </svg>
-                @illlya333
-            </a>
-            <a href="https://t.me/rnicrosoft_corp" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#4aff9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 5L2 12.5l7 1M21 5l-5 14-7-5.5M21 5L9 13.5m0 0V19l3.5-3"/>
-                </svg>
-                rnicrosoft_corp
-            </a>
-        </div>
-        <div class="egg-sub">ну ти й жук, знайшов пасхалку 🎉<br>мало хто дістається сюди)))</div>
-        <button class="egg-back" id="eggBack">← назад</button>
-    </div>
-</div>
-
 <div class="slider" id="slider">
+
     <section class="page intro">
         <h1>Карпати: музика вітру</h1>
         <p>
             Гори говорять мовою тиші.
-            Вода пам'ятає шлях крізь каміння,
-            а вітер між смереками переносить історії,
+            Вода пам'ятає шлях крізь каміння.
+            А вітер між смереками переносить історії,
             які неможливо записати словами.
         </p>
         <div class="authors">
             Проєкт 10-Г класу<br><br>
-            <span id="illyaName" style="cursor:default; user-select:none; -webkit-tap-highlight-color:transparent;">Ілля Трикуліч</span><br>
-            Анастасія Паламарчук
-        </div>
-        <div class="inst-links">
-            <a href="https://instagram.com/illlya333" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                </svg>
-                @illlya333
-            </a>
-            <a href="https://instagram.com/pal.alya_" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                </svg>
-                @pal.alya_
-            </a>
+            Ілля Трикуліч<br>
+            Анастасія
         </div>
     </section>
+
 </div>
 
 <script>
 
+/* AUTHORS */
 const authors = {
     "RD": "Рибчинський Денис",
     "DL": "Дідик Валерія",
     "TI": "Трикуліч Ілля",
     "VL": "Ліза Войтенко",
     "om": "Оксана Миколаївна Вусатюк",
-    "EG": "Іванов Єгор",
-    "TK": "Костерук Тетяна Анатоліївна"
+    "EG": "Іванов Єгор"
 };
 
+/* FILES */
 const files = [
     "divochi_slyozu/DL_001.jpg",
     "divochi_slyozu/EG_001.jpg",
@@ -373,7 +219,6 @@ const files = [
     "divochi_slyozu/TI_005.jpg",
     "divochi_slyozu/VL_001.jpg",
     "other/om_001.jpg",
-    "other/TK_001.jpg",
     "skit/RD_001.jpg",
     "vodospad/EG_003.jpg",
     "vodospad/RD_001.jpg",
@@ -382,31 +227,16 @@ const files = [
     "vodospad/TI_003.jpg"
 ];
 
+/* QUOTES */
 const quotes = [
     "Тиша гір звучить голосніше за слова.",
-    "Гори навчають мовчати красномовно.",
-    "Кожна стежка тут веде до кращої версії себе.",
-    "У Карпатах і вітер має душу.",
-    "Таємниці туману недоступні метушні.",
+    "Гори навчають мовчати красиво.",
+    "Кожна стежка веде до іншої версії себе.",
+    "У Карпатах навіть вітер має душу.",
+    "Туман приховує те, що не побачить метушня.",
     "Вода пам'ятає шлях крізь каміння.",
-    "Смереки пам'ятають більше, ніж люди.",
-    "Там завмирає шум, де починаються гори.",
-    "Світло в горах завжди трохи інше - чесніше.",
-    "Час тут не йде - він чаїться поміж смереками.",
-    "Кожен водоспад - це втеча неба на землю.",
-    "Тиша Карпат учить не лише слухати, але й чути.",
-    "Дороги тут не ведуть - вони випробовують.",
-    "Каміння пам'ятає кроки тих, хто вже пішов.",
-    "Тут навіть повітря має текстуру спокою.",
-    "Гори не пояснюють себе, а дають можливість відчути їхню велич.",
-    "Туман стирає зайве, залишаючи справжнє.",
-    "У воді відображається не світ, а стан душі.",
-    "Небо тут ближче, ніж деінде.",
-    "Кожен звук серед мовчання гір набуває особливої ваги.",
-    "Ліс не дивиться, а спостерігає і відчуває.",
-    "Тут немає поспіху. Є лише одвічний ритм природи.",
-    "Карпати не запам'ятовують людей, але змінюють їх.",
-    "Гори не потребують слів - вони говорять відчуттями."
+    "Смереки пам'ятають більше за людей.",
+    "Там, де закінчується шум — починаються Карпати."
 ];
 
 function getLocation(path){
@@ -418,11 +248,12 @@ function getLocation(path){
 }
 
 function getAuthor(path){
-    const file   = path.split("/").pop().replace(/\.[^.]+$/, "");
+    const file   = path.split("/").pop();
     const prefix = file.split("_")[0];
     return authors[prefix] || "Невідомий автор";
 }
 
+/* BUILD PHOTO PAGES */
 const slider = document.getElementById("slider");
 
 files.forEach((file, index) => {
@@ -432,18 +263,27 @@ files.forEach((file, index) => {
         <div class="location">${getLocation(file)}</div>
         <div class="image-container"><img src="${file}" alt="Карпати"></div>
         <div class="author">${getAuthor(file)}</div>
-        <div class="quote">${quotes[index % quotes.length]}</div>
+        <div class="quote">"${quotes[index % quotes.length]}"</div>
     `;
     slider.appendChild(page);
 });
 
+/* FINAL PAGE */
 const finalPage = document.createElement("section");
 finalPage.className = "page intro";
 finalPage.innerHTML = `
     <h1>Дякуємо за увагу</h1>
-    <p>Карпати залишаються там, де шумить вода, де туман торкається смерек, і де вітер пам'ятає більше за людей.</p>
-    <div class="authors">10-Г клас<br><br>«Карпати: музика вітру»</div>
-    <a class="yt-btn" href="https://youtu.be/QPjlPqJWfMk?si=jKs1moxaUbev6RAG" target="_blank" rel="noopener">
+    <p>
+        Карпати залишаються там,
+        де шумить вода,
+        де туман торкається смерек,
+        і де вітер пам'ятає більше за людей.
+    </p>
+    <div class="authors">
+        10-Г клас<br><br>
+        «Карпати: музика вітру»
+    </div>
+    <a class="yt-btn" href="https://youtu.be/ТУТ_ТВОЄ_ПОСИЛАННЯ" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#162216"/>
             <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#dcc9ab"/>
@@ -454,30 +294,59 @@ finalPage.innerHTML = `
 slider.appendChild(finalPage);
 
 /* =====================================================
-   BACKGROUND
+   SLIDER
+===================================================== */
+let current = 0;
+
+function getPages(){ return document.querySelectorAll(".slider .page"); }
+
+function updateSlider(){
+    slider.style.transform = `translateX(-${current * window.innerWidth}px)`;
+    document.getElementById("counter").textContent =
+        `${current + 1} / ${getPages().length}`;
+}
+
+/* =====================================================
+   REACTIVE BACKGROUND
+   — 24 hand-picked positions, irregular step logic
 ===================================================== */
 const bgStates = [
-    {pos:"0% 0%",    br:1.00}, {pos:"80% 20%",  br:1.05},
-    {pos:"30% 90%",  br:0.96}, {pos:"100% 50%", br:1.07},
-    {pos:"15% 60%",  br:0.98}, {pos:"60% 10%",  br:1.04},
-    {pos:"90% 80%",  br:1.06}, {pos:"40% 40%",  br:0.97},
-    {pos:"70% 100%", br:1.03}, {pos:"5% 30%",   br:1.05},
-    {pos:"55% 70%",  br:0.96}, {pos:"85% 5%",   br:1.07},
-    {pos:"20% 85%",  br:1.01}, {pos:"45% 55%",  br:0.98},
-    {pos:"95% 40%",  br:1.05}, {pos:"10% 10%",  br:0.97},
-    {pos:"75% 65%",  br:1.04}, {pos:"35% 20%",  br:1.00},
-    {pos:"65% 90%",  br:1.06}, {pos:"50% 0%",   br:0.96},
-    {pos:"25% 45%",  br:1.02}, {pos:"88% 60%",  br:0.98},
-    {pos:"12% 75%",  br:1.04}, {pos:"58% 35%",  br:1.01},
+    { pos:"0% 0%",     br:1.00 },
+    { pos:"80% 20%",   br:1.06 },
+    { pos:"30% 90%",   br:0.94 },
+    { pos:"100% 50%",  br:1.08 },
+    { pos:"15% 60%",   br:0.97 },
+    { pos:"60% 10%",   br:1.04 },
+    { pos:"90% 80%",   br:1.07 },
+    { pos:"40% 40%",   br:0.96 },
+    { pos:"70% 100%",  br:1.03 },
+    { pos:"5% 30%",    br:1.05 },
+    { pos:"55% 70%",   br:0.95 },
+    { pos:"85% 5%",    br:1.08 },
+    { pos:"20% 85%",   br:1.01 },
+    { pos:"45% 55%",   br:0.98 },
+    { pos:"95% 40%",   br:1.06 },
+    { pos:"10% 10%",   br:0.96 },
+    { pos:"75% 65%",   br:1.04 },
+    { pos:"35% 20%",   br:1.00 },
+    { pos:"65% 90%",   br:1.07 },
+    { pos:"50% 0%",    br:0.94 },
+    { pos:"25% 45%",   br:1.02 },
+    { pos:"88% 60%",   br:0.97 },
+    { pos:"12% 75%",   br:1.05 },
+    { pos:"58% 35%",   br:1.01 },
 ];
+
 let bgIdx = 0;
 
 function applyBg(){
-    const s = bgStates[bgIdx];
+    const s = bgStates[bgIdx % bgStates.length];
     document.body.style.backgroundPosition = s.pos;
-    document.body.style.filter = "brightness(" + s.br + ")";
+    document.body.style.filter = `brightness(${s.br})`;
 }
+
 function shiftBg(dir){
+    // irregular: 60% chance step=1, 30% step=2, 10% step=3
     const r = Math.random();
     const step = r < .6 ? 1 : r < .9 ? 2 : 3;
     bgIdx = ((bgIdx + dir * step) % bgStates.length + bgStates.length) % bgStates.length;
@@ -485,17 +354,11 @@ function shiftBg(dir){
 }
 
 /* =====================================================
-   SLIDER
+   NAVIGATION — single source of truth
 ===================================================== */
-let current = 0;
-function pageCount(){ return document.querySelectorAll(".slider .page").length; }
-
-function updateSlider(){
-    slider.style.transform = "translateX(-" + (current * window.innerWidth) + "px)";
-    document.getElementById("counter").textContent = (current+1) + " / " + pageCount();
-}
 function goNext(){
-    if(current < pageCount()-1){ current++; updateSlider(); shiftBg(1); }
+    const pages = getPages();
+    if(current < pages.length - 1){ current++; updateSlider(); shiftBg(1); }
 }
 function goPrev(){
     if(current > 0){ current--; updateSlider(); shiftBg(-1); }
@@ -503,160 +366,30 @@ function goPrev(){
 
 document.getElementById("nextBtn").addEventListener("click", goNext);
 document.getElementById("prevBtn").addEventListener("click", goPrev);
-document.addEventListener("keydown", e => {
-    if(e.key==="ArrowRight"||e.key===" ") goNext();
-    if(e.key==="ArrowLeft") goPrev();
+
+document.addEventListener("keydown", (e) => {
+    if(e.key === "ArrowRight" || e.key === " ") goNext();
+    if(e.key === "ArrowLeft") goPrev();
 });
+
 window.addEventListener("resize", updateSlider);
 
-/* swipe — skip on page 0 to avoid fighting with tap targets on intro */
-let tx=0, cx=0, swipeLocked=false;
-slider.addEventListener("touchstart", e=>{
-    tx=e.touches[0].clientX;
-    cx=tx;
-    swipeLocked=false;
-}, {passive:true});
-slider.addEventListener("touchmove", e=>{
-    cx=e.touches[0].clientX;
-    /* if horizontal drag detected, mark locked so tap won't fire */
-    if(Math.abs(cx-tx) > 10) swipeLocked=true;
-}, {passive:true});
-slider.addEventListener("touchend", ()=>{
-    const diff = tx - cx;
-    /* page 0: only allow swipe left (forward), never swipe back from start */
-    if(current === 0){
-        if(diff > 60) goNext();
-    } else {
-        if(diff > 60) goNext();
-        else if(diff < -60) goPrev();
-    }
-    tx=cx=0;
-});
+/* SWIPE */
+let touchStartX = 0, touchCurX = 0;
 
-/* =====================================================
-   EASTER EGG
-===================================================== */
-let illyaTaps   = 0;
-let illyaTimer  = null;
-let lastTap     = 0;
+slider.addEventListener("touchstart", e => {
+    touchStartX = e.touches[0].clientX;
+}, { passive:true });
 
-const illyaEl = document.getElementById("illyaName");
+slider.addEventListener("touchmove", e => {
+    touchCurX = e.touches[0].clientX;
+}, { passive:true });
 
-/* works on both mouse (desktop) and touch (phone) */
-function handleIllyaTap(e){
-    /* prevent the touch from also triggering a swipe */
-    e.stopPropagation();
-
-    const now = Date.now();
-    /* reset if gap > 1.2s */
-    if(now - lastTap > 1200) illyaTaps = 0;
-    lastTap = now;
-
-    illyaTaps++;
-    clearTimeout(illyaTimer);
-    illyaTimer = setTimeout(()=>{ illyaTaps=0; }, 1200);
-
-    if(illyaTaps >= 3){
-        illyaTaps = 0;
-        openEaster();
-    }
-}
-
-illyaEl.addEventListener("click",      handleIllyaTap);
-illyaEl.addEventListener("touchend",   handleIllyaTap, {passive:false});
-
-function openEaster(){
-    document.getElementById("easter").classList.add("show");
-    startComets();
-}
-
-document.getElementById("eggBack").addEventListener("click", closeEaster);
-document.getElementById("eggBack").addEventListener("touchend", e=>{
-    e.stopPropagation();
-    closeEaster();
-}, {passive:false});
-
-function closeEaster(){
-    document.getElementById("easter").classList.remove("show");
-    stopComets();
-}
-
-/* =====================================================
-   COMETS
-===================================================== */
-let cometRAF = null;
-let comets   = [];
-
-function startComets(){
-    const canvas = document.getElementById("eggCanvas");
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const ctx = canvas.getContext("2d");
-    comets = [];
-
-    function spawnComet(){
-        const angle = (Math.random() * 30 + 15) * Math.PI / 180;
-        comets.push({
-            x:     Math.random() * canvas.width * 1.4 - canvas.width * 0.2,
-            y:     -20,
-            vx:    Math.cos(angle) * (5 + Math.random() * 6),
-            vy:    Math.sin(angle) * (5 + Math.random() * 6),
-            len:   80 + Math.random() * 120,
-            alpha: 0.6 + Math.random() * 0.4,
-            size:  1.5 + Math.random() * 2,
-            hue:   Math.random() > 0.5 ? 145 : 195,
-        });
-    }
-
-    let frame = 0;
-    function loop(){
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        frame++;
-        if(frame % 10 === 0) spawnComet();
-
-        comets = comets.filter(c => c.y < canvas.height + 60 && c.x < canvas.width + 60);
-
-        comets.forEach(c => {
-            const tailX = c.x - (c.vx / 7) * c.len;
-            const tailY = c.y - (c.vy / 7) * c.len;
-            const grad  = ctx.createLinearGradient(c.x, c.y, tailX, tailY);
-            grad.addColorStop(0, `hsla(${c.hue},100%,75%,${c.alpha})`);
-            grad.addColorStop(1, `hsla(${c.hue},100%,75%,0)`);
-
-            ctx.beginPath();
-            ctx.moveTo(c.x, c.y);
-            ctx.lineTo(tailX, tailY);
-            ctx.strokeStyle = grad;
-            ctx.lineWidth   = c.size;
-            ctx.lineCap     = "round";
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(c.x, c.y, c.size * 1.6, 0, Math.PI * 2);
-            ctx.fillStyle = `hsla(${c.hue},100%,92%,${c.alpha})`;
-            ctx.fill();
-
-            c.x += c.vx;
-            c.y += c.vy;
-        });
-
-        cometRAF = requestAnimationFrame(loop);
-    }
-    loop();
-}
-
-function stopComets(){
-    cancelAnimationFrame(cometRAF);
-    comets = [];
-    const canvas = document.getElementById("eggCanvas");
-    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-}
-
-window.addEventListener("resize", ()=>{
-    const c = document.getElementById("eggCanvas");
-    c.width  = window.innerWidth;
-    c.height = window.innerHeight;
-    updateSlider();
+slider.addEventListener("touchend", () => {
+    const diff = touchStartX - touchCurX;
+    if(diff >  60) goNext();
+    else if(diff < -60) goPrev();
+    touchStartX = touchCurX = 0;
 });
 
 /* INIT */
